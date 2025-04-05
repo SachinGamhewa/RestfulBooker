@@ -1,1 +1,469 @@
-
+{
+	"info": {		
+		"name": "Restful_Booker",
+		"description": "https://restful-booker.herokuapp.com/apidoc/index.html",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "T001-HealthCheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T002-Booking-GetBookingIds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/booking",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T003-Booking-CreateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.collectionVariables.set(\"bookingID\", pm.response.json().bookingid);\r",
+							"pm.test(\"Response contains ID\", function () {\r",
+							"\tpm.expect(pm.response.text()).to.include(\"bookingid\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"Paul\",\r\n    \"lastname\" : \"King\",\r\n    \"totalprice\" : 777,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2024-01-01\",\r\n        \"checkout\" : \"2025-01-01\"\r\n    },\r\n    \"additionalneeds\" : \"Breakfast\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/booking",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T004-Booking-GetBookingIds-ByName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response contains ID\", function () {\r",
+							"\tpm.expect(pm.response.text()).to.include(\"bookingid\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/booking?firstname=Paul&lastname=King",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "Paul"
+						},
+						{
+							"key": "lastname",
+							"value": "King"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T005-Booking-GetBookingIds-ByCheckInDate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response contains ID\", function () {\r",
+							"\tpm.expect(pm.response.text()).to.include(\"bookingid\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/booking?checkin=2024-01-01",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking"
+					],
+					"query": [
+						{
+							"key": "checkin",
+							"value": "2024-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T006-Booking-GetBookingIds-ByCheckOutDate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response contains ID\", function () {\r",
+							"\tpm.expect(pm.response.text()).to.include(\"bookingid\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/booking?checkout=2025-01-01",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking"
+					],
+					"query": [
+						{
+							"key": "checkout",
+							"value": "2025-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T007-Booking-GetBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Firstname match\", function () {\r",
+							"\tpm.expect(pm.response.text()).to.include(\"Paul\");\r",
+							"});\r",
+							"pm.test(\"Lastname match\", function () {\r",
+							"\tpm.expect(pm.response.text()).to.include(\"King\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/booking/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{bookingID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T008-Booking-UpdateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"Paul\",\r\n    \"lastname\" : \"King\",\r\n    \"totalprice\" : 171,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2024-01-01\",\r\n        \"checkout\" : \"2025-02-01\"\r\n    },\r\n    \"additionalneeds\" : \"Lunch\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/booking/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{bookingID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T009-Booking-PartialUpdateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"Paul\",\r\n    \"lastname\" : \"King Jr.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/booking/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{bookingID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "T010-Booking-DeleteBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/booking/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{bookingID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://restful-booker.herokuapp.com",
+			"type": "default"
+		},
+		{
+			"key": "authHeader",
+			"value": "${{ secrets.AUTH_HEADER_TOKEN }}",
+			"type": "default"
+		},
+		{
+			"key": "bookingID",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
