@@ -1,1 +1,14 @@
+name: Run-Tests
 
+on:
+  workflow_dispatch:
+  
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: matt-ball/newman-action@master
+        with:
+          collection: Collection/Restful_Booker.postman_collection.json
+          envVar: '[{ "key": "authHeader", "value": "${{secrets.AUTH_HEADER_TOKEN}}" }]'
